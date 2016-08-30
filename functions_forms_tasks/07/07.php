@@ -2,8 +2,18 @@
 $postfile = __DIR__.DIRECTORY_SEPARATOR.'gallery.txt';
 $posts = postsLoad($postFile);
 
-if (!empty($_POST['nic']) && !empty($_POST['msg'])) {
+if (!empty($_POST['nic']) && function validate()) {
   postSave($postFile);
+  $posts=[
+  	'nic' => $_POST['nic'],
+	'msg' => $_POST['msg'],
+	];
+}
+
+function validate() {
+	if (empty($_POST['nic']) || empty($_POST['msg'])) {
+		return false;
+	}
 }
 
 function postSave($fileName){
@@ -12,7 +22,7 @@ function postSave($fileName){
 	'msg' => $_POST['msg'],
 	];
 	$f = fopen($fileName, 'a');
-	twrite($f, serialize($msg).PHP_EOL);
+	fwrite($f, serialize($msg).PHP_EOL);
 	fclose($f);
 }
 
@@ -36,6 +46,13 @@ function postsLoad($file){
 	<meta charset="UTF-8"/>
 </head>
 <body>
+	<?php foreach($posts as $post) :?>
+	<div>
+		<strong><?=$post['nic']?></strong>
+		<div><strong><?=$post['msg']?></strong></div>
+	</div>
+	<? endforeach; ?>
+	
 	<form action="" method="post">
 		Nick: <input type="text" name="nic" value=""/><br/>
 		Message: <textarea name="msg">
