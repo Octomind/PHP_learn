@@ -1,0 +1,17 @@
+<tr>
+<?php
+for($i = 0; $i < $cntTd; $i++):
+?>
+        <td width="33%">
+        <?php
+        if(isset($row[$i])):
+        ?>
+            <img src="/fs/gallery/<?=$row[$i]?>" style="width: 100%;"/>
+        <?php
+        endif;
+        ?>
+        </td>
+<?php
+endfor;
+?>
+</tr>
